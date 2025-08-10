@@ -56,6 +56,38 @@ const obtenerInventario = async ({
   };
 };
 
+const obtenerInventarioFiltros = async ({
+  precio_min,
+  precio_max,
+  categoria,
+  metal,
+}) => {
+  let filtros = [];
+  const valores = [];
+  const agregarFiltro = (campo, comparador, valor) => {
+    valores.push(valor);
+    const { length } = filtros;
+    
+    filtros.push(`${campo} ${comparador} $${length + 1}`);
+  };
+  if (precio_min) agregarFiltro("precio", ">=", precio_min);
+  if (precio_max) agregarFiltro("precio", "<=", precio_max);
+  if (categoria) agregarFiltro("categoria", "=", categoria);
+  if (metal) agregarFiltro("metal", "=", metal);
+
+  let query = "select * from inventario";
+
+  if (filtros.length > 0) {
+    filtros = filtros.join(" and ");
+    query += ` where ${filtros}`;
+  }
+
+  const { rows } = await pool.query(query, valores);
+
+  return rows;
+};
+
 export const joyasModels = {
   obtenerInventario,
+  obtenerInventarioFiltros,
 };

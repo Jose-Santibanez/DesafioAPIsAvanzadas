@@ -13,6 +13,19 @@ const obtenerInventario = async (req, res) => {
    }
 }
 
+const obtenerInventarioFiltros = async(req, res)=>{
+    const queryStrings = req.query; 
+    try{
+            const joyasFiltradas = await joyasModels.obtenerInventarioFiltros(queryStrings);
+            return res.json(joyasFiltradas)
+    }catch(err){
+        console.error(err)
+        return res.status(500).json({message: 'server Internal Error'})
+    }
+}
+
+
 export const JoyasController = {
     obtenerInventario,
+    obtenerInventarioFiltros,
 }

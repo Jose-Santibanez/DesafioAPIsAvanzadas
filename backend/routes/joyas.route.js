@@ -3,6 +3,6 @@ import { JoyasController } from "../controllers/joyas.controller.js";// importam
 const router = Router() // creamos una instancia del enrutador de express
 
 router.get('/', JoyasController.obtenerInventario)
-
+router.get('/filtros',JoyasController.obtenerInventarioFiltros)
 
 export default router
