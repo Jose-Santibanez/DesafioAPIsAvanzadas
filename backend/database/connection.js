@@ -5,6 +5,11 @@ import pkg from 'pg' // importamos el cliente pgSQL para node
 
 const { Pool } = pkg // extraemos la clase Pool del cliente pkg para el pool de conexiones
 export const pool = new Pool({ // creamos una nueva instancia de la clase Pool
+    user: process.env.PGUSER,
+    host: process.env.PGHOST,
+    database: process.env.PGDATABASE,
+    password: process.env.PGPASSWORD,
+    port: process.env.PGPORT,
     allowExitOnIdle:true    // nos permite abrir una conexion cada vez que se consulta a la BD, luego se cierra
 })
 
